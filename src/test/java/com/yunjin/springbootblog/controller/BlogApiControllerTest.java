@@ -91,7 +91,6 @@ class BlogApiControllerTest {
         final String title = "제목";
         final String content = "내용";
 
-        // 블로그 글 저장
         blogRepository.save(Article.builder()
                 .title(title)
                 .content(content)
