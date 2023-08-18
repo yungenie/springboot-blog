@@ -3,6 +3,7 @@ package com.yunjin.springbootblog.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yunjin.springbootblog.domain.Article;
 import com.yunjin.springbootblog.dto.ArticleSaveRequestDto;
+import com.yunjin.springbootblog.dto.ArticleUpdateRequestDto;
 import com.yunjin.springbootblog.repository.BlogRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,8 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -49,7 +49,7 @@ class BlogApiControllerTest {
     }
 
     @Test
-    public void Articles_등록() throws Exception {
+    public void Articles_블로그_글_등록() throws Exception {
         // given
         final String url = "/api/articles";
         final String title = "제목";
@@ -73,7 +73,7 @@ class BlogApiControllerTest {
     }
 
     @Test
-    public void Articles_등록_테스트코드리팩토리() throws Exception {
+    public void Articles_블로그_글_등록_테스트코드리팩토리() throws Exception {
         final String requestBody = objectMapper.writeValueAsString(new ArticleSaveRequestDto("제목a", "내용a"));
 
         mockMvc.perform(post("/api/articles")
@@ -85,7 +85,7 @@ class BlogApiControllerTest {
     }
 
     @Test
-    public void Articles_전체조회() throws Exception {
+    public void Articles_블로그_글_전체조회() throws Exception {
         // given
         final String url = "/api/articles";
         final String title = "제목";
@@ -99,6 +99,7 @@ class BlogApiControllerTest {
         // when
         final ResultActions resultActions = mockMvc.perform(get(url)
                 .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isOk());
 
         // then
@@ -108,5 +109,77 @@ class BlogApiControllerTest {
 
     }
 
+    @Test
+    public void Articles_블로그_글_단일조회() throws Exception {
+        // given
+        final String url = "/api/articles/{id}";
+        final String title = "제목";
+        final String content = "내용";
 
+        Article savedArticle = blogRepository.save(Article.builder()
+                .title(title)
+                .content(content)
+                .build());
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(get(url, savedArticle.getId()))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        // then
+        resultActions
+                .andExpect(jsonPath("$.content").value(content))
+                .andExpect(jsonPath("$.title").value(title));
+
+    }
+
+    @Test
+    public void Articles_블로그_글_수정() throws Exception {
+        // given
+        final String url = "/api/articles/{id}";
+        final String title = "제목";
+        final String content = "내용";
+
+        Article savedArticle = blogRepository.save(Article.builder()
+                .title(title)
+                .content(content)
+                .build());
+
+        final String updateTitle = "제목 수정";
+        final String updateContent = "내용 수정";
+
+        // when
+        mockMvc.perform(put(url, savedArticle.getId())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(new ArticleUpdateRequestDto(updateTitle, updateContent))))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        // then
+        Article article = blogRepository.findById(savedArticle.getId()).orElseThrow(() -> new IllegalArgumentException("not found : " + savedArticle.getId()));
+        assertThat(article.getTitle()).isEqualTo(updateTitle);
+        assertThat(article.getContent()).isEqualTo(updateContent);
+    }
+
+    @Test
+    public void Articles_블로그_글_삭제() throws Exception {
+        // given
+        final String url = "/api/articles/{id}";
+        final String title = "제목";
+        final String content = "내용";
+
+        Article savedArticle = blogRepository.save(Article.builder()
+                .title(title)
+                .content(content)
+                .build());
+
+        // when
+        mockMvc.perform(delete(url, savedArticle.getId()))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        // then
+        List<Article> articles = blogRepository.findAll();
+        assertThat(articles).isEmpty();
+    }
 }
