@@ -37,7 +37,7 @@ public class BlogApiController {
      * @return 응답 상태와 Article 응답 객체의 전체 목록 반환
      */
     @GetMapping("/api/articles")
-    public ResponseEntity<List<ArticleResponseDto>> findAllArticles() {
+    public ResponseEntity<List<ArticleResponseDto>> findAllArticle() {
 
         List<ArticleResponseDto> allArticles = blogService.findAll()
                 .stream()
@@ -54,7 +54,7 @@ public class BlogApiController {
      * @return 응답 상태와 Article 응답 객체의 단일 목록 반환
      */
     @GetMapping("/api/articles/{id}")
-    public ResponseEntity<ArticleResponseDto> findArticle(@PathVariable Long id) {
+    public ResponseEntity<ArticleResponseDto> findOneArticle(@PathVariable Long id) {
 
         Article article = blogService.findById(id);
 
