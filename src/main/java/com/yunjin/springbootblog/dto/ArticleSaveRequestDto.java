@@ -1,10 +1,10 @@
 package com.yunjin.springbootblog.dto;
 
 import com.yunjin.springbootblog.domain.Article;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 @NoArgsConstructor
 @Getter
 public class ArticleSaveRequestDto {
