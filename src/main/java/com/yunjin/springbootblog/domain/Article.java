@@ -10,7 +10,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
+
 @Entity
+@Table(name= "article")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // Class 'Article' should have [public, protected] no-arg constructor
 public class Article {
