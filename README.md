@@ -1,5 +1,5 @@
 # springboot-blog
-- 개인 프로젝트 ing~
+- `개인 프로젝트 ing~`
 - 나만의 블로그(메모장) 컨셉
 
 ## 개요
@@ -25,9 +25,9 @@
 
 
 ## 기능(예정)
-- JPA/Hibernate + H2 사용한 블로그 기능 구현 (진행중)
-- spring security를 사용한 로그인/로그아웃, 회원가입 구현  (진행중)
-- OAuth2 + JWT를 활용한 소셜 로그인(Google) 구현
-- AWS Elastic Beanstalk에 프로젝트 배포하기
-- 깃허브 액션 CI/CD 구축하기
+ - [ ] JPA/Hibernate + H2 사용한 블로그 기능 구현 (진행중)
+ - [ ] spring security를 사용한 로그인/로그아웃, 회원가입 구현  (진행중)
+ - [ ] OAuth2 + JWT를 활용한 소셜 로그인(Google) 구현
+ - [ ] AWS Elastic Beanstalk에 프로젝트 배포하기
+ - [ ] 깃허브 액션 CI/CD 구축하기
 
