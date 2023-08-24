@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class ArticleUpdateRequestDto {
+
     private String title;
     private String content;
 
