@@ -30,7 +30,7 @@ public class Article {
 
     @CreatedDate
     @Column(name = "created_at")
-    private LocalDateTime createdAt; // todo LocalDateTime 공부하기
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
     @Column(name = "updated_at")
