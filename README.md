@@ -26,10 +26,10 @@
 
 
 ## 기능(예정)
- - [v] JPA/Hibernate + H2 사용한 블로그 기능 구현
- - [v] spring security를 사용한 로그인/로그아웃, 회원가입 구현
+ - [X] JPA/Hibernate + H2 사용한 블로그 기능 구현
+ - [X] spring security를 사용한 로그인/로그아웃, 회원가입 구현
  - [ ] JWT Refresh Token 사용한 로그인/로그아웃 구현
  - [ ] OAuth2 + JWT를 활용한 소셜 로그인(Google) 구현
- - [v] AWS Elastic Beanstalk에 EC2, RDS 인스턴스 생성 및 배포하기
+ - [X] AWS Elastic Beanstalk에 EC2, RDS 인스턴스 생성 및 배포하기
  - [ ] 깃허브 액션 CI/CD 구축하기
 
