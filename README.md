@@ -8,9 +8,9 @@
 
 ## 기술스택
 - Java : 17
-- Spring-Boot : 3.1.2
+- Spring-Boot : 3.0.2
 - Gradle : 7.6.2
-- DB : H2
+- DB : H2 인메모리, AWS RDS (MySQL)
 - dependencies
   - spring-boot-starter-web
   - spring-boot-starter-data-jpa
@@ -18,6 +18,7 @@
   - spring-boot-starter-security
   - thymeleaf-extras-springsecurity6
   - com.h2database:h2
+  - mysql:mysql-connector-java
   - org.projectlombok:lombok
   - spring-boot-starter-test
   - spring-security-test
@@ -25,9 +26,10 @@
 
 
 ## 기능(예정)
- - [ ] JPA/Hibernate + H2 사용한 블로그 기능 구현 (진행중)
- - [ ] spring security를 사용한 로그인/로그아웃, 회원가입 구현  (진행중)
+ - [v] JPA/Hibernate + H2 사용한 블로그 기능 구현
+ - [v] spring security를 사용한 로그인/로그아웃, 회원가입 구현
+ - [ ] JWT Refresh Token 사용한 로그인/로그아웃 구현
  - [ ] OAuth2 + JWT를 활용한 소셜 로그인(Google) 구현
- - [ ] AWS Elastic Beanstalk에 프로젝트 배포하기
+ - [v] AWS Elastic Beanstalk에 EC2, RDS 인스턴스 생성 및 배포하기
  - [ ] 깃허브 액션 CI/CD 구축하기
 
