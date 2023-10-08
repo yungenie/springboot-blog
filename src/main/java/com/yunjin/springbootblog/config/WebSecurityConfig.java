@@ -10,8 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 @RequiredArgsConstructor
 @Configuration
@@ -27,7 +26,7 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer configure() {
         return web -> web.ignoring()
-                .requestMatchers(toH2Console())
+                //.requestMatchers(toH2Console())
                 .requestMatchers("/static/**");
     }
 
@@ -36,20 +35,26 @@ public class WebSecurityConfig {
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+        requestCache.setMatchingRequestParameterName(null);
+
         return http
                 .authorizeHttpRequests() // 인증, 인가 설정
-                    .requestMatchers("/login", "/signup", "/user").permitAll()
+                    .requestMatchers("/login", "/signup", "/user").permitAll() // 특정 경로 허용
                     .anyRequest().authenticated()
                 .and()
                 .formLogin() // 폼 기반 로그인 설정
                     .loginPage("/login")
-                    .defaultSuccessUrl("/articles")
+                    .defaultSuccessUrl("/articles") // 로그인 완료되었을 때 이동 경로
                 .and()
                 .logout() // 로그아웃 설정
                     .logoutSuccessUrl("/login")
                     .invalidateHttpSession(true)
                 .and()
                 .csrf().disable()
+                .requestCache((cache) -> cache
+                        .requestCache(requestCache))
                 .build();
     }
 
@@ -61,7 +66,7 @@ public class WebSecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailService userDetailService) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailService) // 사용자 정보 서비스 설정. todo DI로 주입받은 userService 사용하는 지, 파라미터로 받은 userDetailService 사용하는 지..?
+                .userDetailsService(userService) // 사용자 정보 서비스 설정.
                 .passwordEncoder(bCryptPasswordEncoder)
                 .and()
                 .build();
