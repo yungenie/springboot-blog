@@ -16,7 +16,7 @@ import static java.util.Collections.emptyMap;
  * JWT 토큰 서비스 테스트용 모킹 객체
  */
 @Getter
-class JwtFactory  {
+public class JwtFactory  {
 
     private String subject = "yunjin8931@gmail.com";
     private Date issuedAt = new Date();
