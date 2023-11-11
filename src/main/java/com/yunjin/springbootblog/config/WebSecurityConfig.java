@@ -2,6 +2,7 @@ package com.yunjin.springbootblog.config;
 
 import com.yunjin.springbootblog.service.UserDetailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,7 +42,8 @@ public class WebSecurityConfig {
 
         return http
                 .authorizeHttpRequests() // 인증, 인가 설정
-                    .requestMatchers("/login", "/signup", "/user").permitAll() // 특정 경로 허용
+                    .requestMatchers(PathRequest.toH2Console()).permitAll()
+                    .requestMatchers("/login", "/signup", "/user", "/api/boards").permitAll() // 특정 경로 허용
                     .anyRequest().authenticated()
                 .and()
                 .formLogin() // 폼 기반 로그인 설정
