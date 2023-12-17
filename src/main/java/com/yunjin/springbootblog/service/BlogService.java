@@ -4,9 +4,9 @@ import com.yunjin.springbootblog.domain.Article;
 import com.yunjin.springbootblog.dto.ArticleSaveRequestDto;
 import com.yunjin.springbootblog.dto.ArticleUpdateRequestDto;
 import com.yunjin.springbootblog.repository.BlogRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
