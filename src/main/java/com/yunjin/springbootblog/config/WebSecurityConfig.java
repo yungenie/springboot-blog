@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+
 @RequiredArgsConstructor
 @Configuration
 public class WebSecurityConfig {
@@ -27,7 +29,7 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer configure() {
         return web -> web.ignoring()
-                //.requestMatchers(toH2Console())
+                .requestMatchers(toH2Console())
                 .requestMatchers("/static/**");
     }
 
@@ -42,7 +44,7 @@ public class WebSecurityConfig {
 
         return http
                 .authorizeHttpRequests() // 인증, 인가 설정
-                    .requestMatchers(PathRequest.toH2Console()).permitAll()
+                    .requestMatchers(toH2Console()).permitAll()
                     .requestMatchers("/login", "/signup", "/user", "/api/boards").permitAll() // 특정 경로 허용
                     .anyRequest().authenticated()
                 .and()
